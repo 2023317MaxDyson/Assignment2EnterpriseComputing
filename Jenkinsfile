@@ -3,6 +3,9 @@ pipeline{
 
     stages{
       stage('Build'){
+         environment {
+         CI = 'false'
+        }
             agent{
                docker{
                 image 'node:20.11.0-bullseye'
