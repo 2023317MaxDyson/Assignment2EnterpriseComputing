@@ -1,6 +1,5 @@
 pipeline{
     agent any
-
     stages{
       stage('Build'){
          environment {
@@ -22,9 +21,20 @@ pipeline{
                 '''
             }
       }
+      stage('Test'){
+        agent{
+            docker{
+                image 'node:20.11.0-bullseye'
+                reuseNode true
+            }
+        }
+        steps{
+            sh '''
+                test -f build/index.html
+                npm test
+            '''
 
-
-
-
+        }
+      }
     }
 }
